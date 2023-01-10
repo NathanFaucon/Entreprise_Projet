@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Entreprise_Projet.Models.Service>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Liste des Services</h1>
+@if (Context.Session.GetString("IsLogged") != "")
+{
+    <p>
+    <a asp-action="Create">Ajouter un service</a>
+    </p>
+}
+<form class="row row-cols-lg-auto g-3 align-items-center" asp-controller="Service" asp-action="Filter" style="padding-right: 25px;">
+    <div class="col">
+        <input name="searchString" type="text" class="form-control" placeholder="Rechercher un service..." />
+    </div>
+    <div class="col">
+        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i>Chercher</button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nom
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomService)
+            </td>
+            <td>
+                    @if (Context.Session.GetString("IsLogged") != "")
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <span> |</span> 
+                        <a asp-action = "DeleteService" asp-route-id="@item.Id" > Delete </a>
+                     }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

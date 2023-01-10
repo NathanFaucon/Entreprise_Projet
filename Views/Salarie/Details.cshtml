@@ -1,0 +1,62 @@
+﻿@model Entreprise_Projet.Models.Salarie
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Salarie</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nom
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomSalarie)
+        </dd>
+        <dt class = "col-sm-2">
+            Prénom
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PrenomSalarie)
+        </dd>
+        <dt class = "col-sm-2">
+            Téléphone fixe
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneFixe)
+        </dd>
+        <dt class = "col-sm-2">
+            Téléphone portable
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhonePortable)
+        </dd>
+        <dt class = "col-sm-2">
+            Email
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Mail)
+        </dd>
+        <dt class = "col-sm-2">
+            Site
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Site.NomSite)
+        </dd>
+        <dt class = "col-sm-2">
+            Service
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Service.NomService)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Context.Session.GetString("IsLogged") != "") {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Modifier</a> <p>|</p>
+    }
+    <a asp-action="Index">Retour aux salariés</a>
+</div>

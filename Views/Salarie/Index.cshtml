@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Entreprise_Projet.Models.Salarie>;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Liste des Salariés</h1>
+@if (Context.Session.GetString("IsLogged") != "")
+{
+    <p>
+        <a asp-action="Create">Ajouter un salarié</a>
+    </p>
+}
+<form class="row row-cols-lg-auto g-3 align-items-center" asp-controller="Salarie" asp-action="Filter" style="padding-right: 25px;">
+    <div style="display: flex;">
+        <input name="searchString" type="text" class="form-control" placeholder="Rechercher un salarié..." />
+    
+        <label class="control-label"></label>
+        <select name="searchSite" class="form-control" asp-items="@ViewBag.Sites"><option>Site</option></select>
+
+        <label class="control-label"></label>
+        <select name="searchService" class="form-control" asp-items="@ViewBag.Services"><option>Service</option></select>
+
+        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i>Chercher</button>
+     </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NomSortParm"]">Nom</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PrenomSortParm"]">Prénom</a>
+            </th>
+            <th>
+                Téléphone fixe
+            </th>
+            <th>
+                Téléphone portable
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Site
+            </th>
+            <th>
+                Service
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomSalarie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrenomSalarie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneFixe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhonePortable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Site.NomSite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service.NomService)
+            </td>
+            <td>
+                    @if (Context.Session.GetString("IsLogged") != ""){
+                        <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> <span>|</span> <a asp-action="DeleteSalarie" asp-route-id="@item.Id">Supprimer</a>
+
+                        <span>|</span>
+                    }
+
+                    <a asp-action="Details" asp-route-id="@item.Id">Détails</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
